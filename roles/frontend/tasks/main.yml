@@ -38,7 +38,4 @@
         dest:  /etc/nginx/default.d/expense.conf  
      notify: restart nginx      
 
-   - name: ansible module to restart the service
-     ansible.builtin.service:
-       name: nginx
-       state: restarted           
+   
