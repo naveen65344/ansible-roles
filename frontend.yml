@@ -1,0 +1,6 @@
+- name: configuring mysql server
+  hosts: frontend
+  become: yes
+  
+  roles:
+    - frontend
