@@ -43,8 +43,8 @@
         chdir: /app
 
     - name: Copy the file from local to remote machine
-      ansible.builtin.copy:
-        src: backend.service # Path to the file on your local machine
+      ansible.builtin.template:
+        src: backend.service.j2 # Path to the file on your local machine
         dest: /etc/systemd/system/backend.service
 
 
