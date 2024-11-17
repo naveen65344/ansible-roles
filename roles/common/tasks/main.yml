@@ -1,5 +1,5 @@
  - name: Ensure the directory /opt/expense exists
-      ansible.builtin.file:
+   ansible.builtin.file:
         path: /{{app_location}}     # The directory you want to create
         state: absent 
 
@@ -7,8 +7,8 @@
  
  - name: Ensure the directory /opt/expense exists
    ansible.builtin.file:
-        path: "{{ app_location}}"    # The directory you want to create
-        state: directory  
+      path: "{{ app_location}}"    # The directory you want to create
+      state: directory  
 
 
  - name: Download code (e.g., a tarball or zip file)
