@@ -19,22 +19,13 @@
         name: expense               # The username you want to create
         state: present     
 
-    - name: Ensure the directory /opt/expense exists
-      ansible.builtin.file:
-        path: /app     # The directory you want to create
-        state: directory  
+    - name: Run tasks/other.yaml instead of 'main'
+      ansible.builtin.import_role:
+        name: common
+        tasks_from: main.yml
+    
 
-
-    - name: Download code (e.g., a tarball or zip file)
-      ansible.builtin.get_url:
-        url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip # URL to the code
-        dest: /tmp/backend.zip  #    
-
-    - name: Unzip the file and overwrite
-      ansible.builtin.unarchive:
-        src:  /tmp/backend.zip
-        dest: /app
-        remote_src: yes    
+     
 
 
     - name: Install npm
