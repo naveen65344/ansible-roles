@@ -2,7 +2,7 @@
    ansible.builtin.file:
         path: "{{app_location}}"   # The directory you want to create
         state: absent 
-   ignore_errors: yes     
+   ignore_errors: true    
 
  
  
@@ -20,5 +20,5 @@
  - name: Unzip the file and overwrite
    ansible.builtin.unarchive:
         src:  /tmp/{{component}}.zip
-        dest: /app
+        dest: "{{app_location}}"
         remote_src: yes    
