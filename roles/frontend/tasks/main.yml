@@ -33,8 +33,8 @@
         remote_src: yes  
 
    - name: Copy the file to the remote server
-     ansible.builtin.copy:
-        src: expense.conf  # Path to the local file on the control machine
+     ansible.builtin.template:
+        src: expense.conf.j2  # Path to the local file on the control machine
         dest:  /etc/nginx/default.d/expense.conf     
 
    - name: ansible module to restart the service
