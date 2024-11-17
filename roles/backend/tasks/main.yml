@@ -19,7 +19,7 @@
         name: expense               # The username you want to create
         state: present   
 
-    - name: Run tasks/other.yaml instead of 'main'
+    - name: importing tasks
       ansible.builtin.import_role:
         name: common
         tasks_from: main
