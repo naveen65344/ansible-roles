@@ -2,6 +2,7 @@
    ansible.builtin.file:
         path: "{{app_location}}"   # The directory you want to create
         state: absent 
+   ignore_errors: yes     
 
  
  
