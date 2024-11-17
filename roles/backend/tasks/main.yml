@@ -1,0 +1,80 @@
+
+    - name: disabling nodejs
+      ansible.builtin.command: dnf module disable nodejs -y
+
+
+    - name: disabling nodejs
+      ansible.builtin.command: dnf module enable nodejs:20 -y
+
+    - name: Installing nodejs
+      ansible.builtin.package:
+        name: "{{item}}"
+        state: present  
+      loop:
+       - nodejs
+       - mysql  
+
+    - name: Ensure the user "expense" exists
+      ansible.builtin.user:
+        name: expense               # The username you want to create
+        state: present     
+
+    - name: Ensure the directory /opt/expense exists
+      ansible.builtin.file:
+        path: /app     # The directory you want to create
+        state: directory  
+
+
+    - name: Download code (e.g., a tarball or zip file)
+      ansible.builtin.get_url:
+        url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip # URL to the code
+        dest: /tmp/backend.zip  #    
+
+    - name: Unzip the file and overwrite
+      ansible.builtin.unarchive:
+        src:  /tmp/backend.zip
+        dest: /app
+        remote_src: yes    
+
+
+    - name: Install npm
+      ansible.builtin.command: npm install
+      args:
+        chdir: /app
+
+    - name: Copy the file from local to remote machine
+      ansible.builtin.copy:
+        src: backend.service # Path to the file on your local machine
+        dest: /etc/systemd/system/backend.service
+
+
+    - name: ansible module to install pip
+      ansible.builtin.pip:
+        name: "{{item}}"
+        state: present 
+
+      loop:
+       - PyMySQL
+       - cryptography
+
+
+    - name: ansible module to setup password
+      ansible.builtin.command: mysql_secure_installation --set-root-pass ExpenseApp@1 
+      when: mysql_info.failed is true
+
+    - name: to import data
+      community.mysql.mysql_db:
+      
+       login_user: root
+       login_password: ExpenseApp@1
+       login_host: mysql.daws83s.shop
+       state: import
+       name: all
+       target: /app/schema/backend.sql
+
+    - name: ansible module to start service
+      ansible.builtin.service:
+       name: backend    # Name of the service to be managed
+       state: restarted         
+
+                
