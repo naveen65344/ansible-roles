@@ -9,6 +9,7 @@
        name: nginx
        state: started
        enabled: yes 
+       
    - name: importing tasks
      ansible.builtin.import_role:
         name: common
