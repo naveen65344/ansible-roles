@@ -1,6 +1,6 @@
  - name: Ensure the directory /opt/expense exists
    ansible.builtin.file:
-        path: /{{app_location}}     # The directory you want to create
+        path: "{{app_location}}"   # The directory you want to create
         state: absent 
 
  
